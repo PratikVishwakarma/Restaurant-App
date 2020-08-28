@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, FlatList } from 'react-native'
+import { View, StyleSheet, Text, ScrollView } from 'react-native'
 import SearchBar from '../components/SearchBar'
 import RestaurantsList from '../components/RestaurantsList'
 import useResult from '../hooks/useResults'
@@ -20,25 +20,21 @@ const SearchScreen = () => {
                 onTermChange={setTerm}
                 onTermSubmit={() => searchAPI(term)}
             />
-            <Text>We have found {results.length} of results </Text>
-            {errorMessage ? <Text>{errorMessage}</Text> : <View>
-                <RestaurantsList
-                    title='Cost Effective'
-                    restaurants={filterResultsByPrice('$')}
-                />
-                <RestaurantsList
-                    title='Bit Pricier'
-                    restaurants={filterResultsByPrice('$$')}
-                />
-                <RestaurantsList
-                    title='Big Spender'
-                    restaurants={filterResultsByPrice('$$$')}
-                />
-                 <RestaurantsList
-                    title='Primium Spender'
-                    restaurants={filterResultsByPrice('$$$$')}
-                />
-            </View>
+            {errorMessage ? <Text>{errorMessage}</Text> :
+                <ScrollView>
+                    <RestaurantsList
+                        title='Cost Effective'
+                        restaurants={filterResultsByPrice('$')}
+                    />
+                    <RestaurantsList
+                        title='Bit Pricier'
+                        restaurants={filterResultsByPrice('$$')}
+                    />
+                    <RestaurantsList
+                        title='Big Spender'
+                        restaurants={filterResultsByPrice('$$$')}
+                    />
+                </ScrollView>
             }
         </View>
     )
@@ -46,7 +42,6 @@ const SearchScreen = () => {
 
 const styles = StyleSheet.create({
     viewContainer: {
-        padding: 16,
         flex: 1,
         backgroundColor: 'white'
     }
